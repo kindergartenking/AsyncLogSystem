@@ -44,6 +44,7 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     auto& cfg = ConfigMgr::Inst();
+    //start_backup("test");
    // auto fileFlush = LogFlushFactory::CreateLog<FileFlush>("test.log");
     //fileFlush->Flush("出现异常",8);
     //auto CMDFlush = LogFlushFactory::CreateLog<StdoutFlush>();
@@ -59,6 +60,7 @@ int main() {
     flushanother.emplace_back(fileFlushAnother);
     LoggerManager::GetInstance().AddLogger(std::make_shared<AsyncLogger>("TestLogger",flush_));
     LoggerManager::GetInstance().GetLogger("TestLogger")->Debug("main.cpp",53,"测试日志能否正确写入");
+    LoggerManager::GetInstance().GetLogger("TestLogger")->Debug("main.cpp",63, "测试日志在被读时还能否写入");
     LoggerManager::GetInstance().AddLogger(std::make_shared<AsyncLogger>("AnotherTestLogger", flushanother));
     LoggerManager::GetInstance().GetLogger("AnotherTestLogger")->Debug("main.cpp", 59, "测试日志能否正确写入另一个日志");
     return 0;

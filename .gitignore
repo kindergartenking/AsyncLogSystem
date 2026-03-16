@@ -1,0 +1,23 @@
+# 忽略 Visual Studio 相关
+.vs/
+*.sln
+*.suo
+*.user
+*.filters
+*.vcxproj
+*.vcxproj.user
+
+# 忽略编译输出
+x64/
+Debug/
+Release/
+bin/
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+
+# 忽略其他不需要的
+*.dll
+*.lib

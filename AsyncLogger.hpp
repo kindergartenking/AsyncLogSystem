@@ -11,6 +11,7 @@
 #include "LogFlush.hpp"
 #include "AsioThread.hpp"
 #include "LogMessage.hpp"
+#include "start_backup.hpp"
 using namespace std;
 class AsyncLogger
 {
@@ -107,25 +108,24 @@ protected:
         std::string data = msg.format();
 
 
-        //if (level == LogLevel::value::FATAL ||
-        //    level == LogLevel::value::ERROR)
-        //{
-        //    try
-        //    {
-        //        //这里的ret是std::future类型
-        //        //第1行：提交任务到线程池，返回 future 对象
-        //        auto ret = tp->enqueue(start_backup, data);//将日志信息上传到服务器
-        //        //第2行：阻塞等待任务执行完成，获取结果（或确认执行结束）
-        //        ret.get();
-        //    }
-        //    catch (const std::runtime_error& e)
-        //    {
-        //        // 该线程池没有把stop设置为true的逻辑，所以不做处理
-        //        std::cout << __FILE__ << __LINE__ << "thread pool closed" << std::endl;
-        //    }
-        //}
-        // 
-        // 
+       
+        
+        try
+        {
+            //这里的ret是std::future类型
+            //第1行：提交任务到线程池，返回 future 对象
+            auto ret = AsioThreadPool::GetInstance().enqueue(start_backup, data);//将日志信息上传到服务器
+            //第2行：阻塞等待任务执行完成，获取结果（或确认执行结束）
+            ret.get();
+        }
+        catch (const std::runtime_error& e)
+        {
+            // 该线程池没有把stop设置为true的逻辑，所以不做处理
+            std::cout << __FILE__ << __LINE__ << "thread pool closed" << std::endl;
+        }
+        
+         
+         
         //获取到string类型的日志信息后就可以输出到异步缓冲区了，异步工作器后续会对其进行刷盘
         Flush(data.c_str(), data.size());
 

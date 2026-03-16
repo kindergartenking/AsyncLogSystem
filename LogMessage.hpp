@@ -49,12 +49,15 @@ extern std::string StartTime;
             ProjectName = "ProjectName:" + ProjectName;
             // 2. 流式拼接日志（替代 std::format）
             std::ostringstream ret;
-            ret << "[" <<HostName<< "][" <<starttime<< "][" <<ProjectName << "][" << time_ss.str() << "]["
-                << tid_ << "]["
-                << LogLevel::ToString(level_) << "]["
-                << name_ << "]["
-                << file_name_ << ":" << line_ << "]\t"
-                << payload_ << "\n";
+            ret << "[" <<HostName<< "][" 
+                <<starttime<< "][" 
+                <<ProjectName << "][" 
+                << "LogTime:" << time_ss.str() << "]["
+                << "ThreadID:" << tid_ << "]["
+                << "LogLevel:" << LogLevel::ToString(level_) << "]["
+                << "LoggerName:"<<name_ << "]["
+                << "FileName:"<<file_name_ << ":" << line_ << "]["
+                <<"MEssage:"<< payload_ << "]" << "\n";
 
             return ret.str();
         }
